@@ -1,24 +1,33 @@
 # SHIT - Simple Hack for Incremental Tracking
-Quite literally the simpliest incremental build system you could ever ask for. Open up `output_template` and use `{}` as a substitute for the build number, supplied as a literal. Invoke like: `python SHIT.py <your_output_file.h>`
-
+Quite literally the simpliest incremental build system you could ever ask for. Open up `output_template` and use `{}` as a substitute for the build number, supplied as a literal. Invoke like as `python SHIT.py` or `python SHIT.py <path/to/output.h>`
 To integrate with CMake, add the following lines below your target:
 ```
-option(USE_SHIT "Enabled SHIT, the Simple Hack for Incremental Tracking. Keeps a tally of the current build number. Requires Python" ON)
+# // SHIT INTEGRATION \\
+option(USE_SHIT "Enabled SHIT, the Simple Hack for Incremental Tracking. Keeps a tally of the current build number. Requires Python3" ON)
 
 if (USE_SHIT)
-    set(SHIT_PATH "${CMAKE_SOURCE_DIR}/SHIT") # wherever the SHIT top-level folder is located
-    set(SHIT_OUTPUT_FILE your_output_file.h)
+    find_package(Python3 COMPONENTS Interpreter REQUIRED)
+
+    set(SHIT_OUTPUT "${CMAKE_BINARY_DIR}/YOUR_OUTPUT_NAME.h")
+    set(SHIT_PATH "${CMAKE_SOURCE_DIR}/SHIT")
 
     add_custom_command(
-            TARGET your_target
-            POST_BUILD
-            COMMAND python SHIT.py "${CMAKE_SOURCE_DIR}/${SHIT_OUTPUT_FILE}"
+            OUTPUT ${SHIT_OUTPUT}
+            COMMAND ${Python3_EXECUTABLE} ${SHIT_PATH}/SHIT.py > ${SHIT_OUTPUT}
+            DEPENDS
+                ${SHIT_PATH}/SHIT.py
+                ${SHIT_PATH}/build_number
+                ${SHIT_PATH}/output_template
             WORKING_DIRECTORY ${SHIT_PATH}
-            COMMENT "[SHIT] Incrementing build number..."
+            VERBATIM
     )
 
-    target_sources(your_target PRIVATE ${SHIT_OUTPUT_FILE})
+    add_custom_target(SHIT_Generator ALL DEPENDS ${SHIT_OUTPUT})
+
+    add_dependencies(YOUR_TARGET_HERE SHIT_Generator)
+    target_include_directories(YOUR_TARGET_HERE PRIVATE ${CMAKE_BINARY_DIR})
 endif()
+# \\ SHIT INTEGRATION //
 ```
 
 if, for whatever reason, you'd like to disable `SHIT` without removing the dependancy, simply pass `-DUSE_SHIT=OFF` to your CMake command line and ensure that `CMakeCache.txt` is deleted/reloaded.
