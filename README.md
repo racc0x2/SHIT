@@ -3,12 +3,13 @@ Quite literally the simpliest incremental build system you could ever ask for. O
 To integrate with CMake, add the following lines below your target:
 ```
 # // SHIT INTEGRATION \\
-option(USE_SHIT "Enabled SHIT, the Simple Hack for Incremental Tracking. Keeps a tally of the current build number. Requires Python3" ON)
+option(USE_SHIT "Enabled SHIT, the Simple Hack for Incremental Tracking. Keeps a tally of the current build number. Requires Python" ON)
 
 if (USE_SHIT)
     find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
-    set(SHIT_OUTPUT "${CMAKE_BINARY_DIR}/YOUR_OUTPUT_NAME.h")
+    set(SHIT_TARGET YOUR_CMAKE_TARGET)
+    set(SHIT_OUTPUT "${CMAKE_BINARY_DIR}/YOUR_OUTPUT_FILE.h")
     set(SHIT_PATH "${CMAKE_SOURCE_DIR}/SHIT")
 
     add_custom_command(
@@ -24,8 +25,8 @@ if (USE_SHIT)
 
     add_custom_target(SHIT_Generator ALL DEPENDS ${SHIT_OUTPUT})
 
-    add_dependencies(YOUR_TARGET_HERE SHIT_Generator)
-    target_include_directories(YOUR_TARGET_HERE PRIVATE ${CMAKE_BINARY_DIR})
+    add_dependencies(${SHIT_TARGET} SHIT_Generator)
+    target_include_directories(${SHIT_TARGET} PRIVATE ${CMAKE_BINARY_DIR})
 endif()
 # \\ SHIT INTEGRATION //
 ```
