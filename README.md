@@ -27,6 +27,8 @@ if, for whatever reason, you'd like to disable `SHIT` without removing the depen
 * `SHIT` works very well as a git submodule
 * `SHIT` *can* be used to automate [semantic versioning](https://semver.org/) (see below), but it isn't a true "semantic versioning" implementation. Breaking changes could be registered as a patch from one build to the next, so always manually track your API compatability.
 * `SHIT` is dumb. treat it as such.
+* Yes, Python is a bad choice for this project. I don't care. I needed it to work cross-platform and the vast majority of developers have a Python instance available.
+* Yes, the code has zero error handling. `SHIT` is a predictable "set-it-and-forget-it" program, and is meant to be configured once per workspace.
   
 ```cpp
 int patch = a % 10;
