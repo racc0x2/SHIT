@@ -22,3 +22,14 @@ endif()
 ```
 
 if, for whatever reason, you'd like to disable `SHIT` without removing the dependancy, simply pass `-DUSE_SHIT=OFF` to your CMake command line and ensure that `CMakeCache.txt` is deleted/reloaded.
+
+## Notes
+* `SHIT` works very well as a git submodule
+* `SHIT` *can* be used to automate [semantic versioning](https://semver.org/) (see below), but it isn't a true "semantic versioning" implementation. Breaking changes could be registered as a patch from one build to the next, so always manually track your API compatability.
+* `SHIT` is dumb. treat it as such.
+  
+```cpp
+int patch = a % 10;
+int minor = (a / 10) % 10;
+int major = a / 100;
+```
