@@ -1,0 +1,6 @@
+#ifndef YOUR_INCLUDE_GUARD_H
+#define YOUR_INCLUDE_GUARD_H
+
+#define YOUR_BUILD_NUMBER {}
+
+#endif // YOUR_INCLUDE_GUARD_H
