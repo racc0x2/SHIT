@@ -20,7 +20,7 @@ auto a = ...; // build number
 
 int patch = a % 10;
 int minor = (a / 10) % 10;
-int major = std::max(a / 100, 1) + 1;
+int major = (a / 100) + 1;
 
 printf("%i.%i.%i", major, minor, patch);
 ```
