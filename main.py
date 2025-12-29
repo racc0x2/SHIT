@@ -3,7 +3,7 @@ import hashlib
 import os
 
 def get_path_to(name) -> str:
-    return f'{os.path.dirname(os.path.realpath(__file__))}/{name}'
+    return f'{os.path.dirname(os.path.realpath(__file__))}/.{name}'
 
 def main():
     parser = argparse.ArgumentParser(
