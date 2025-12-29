@@ -16,7 +16,11 @@ SHIT_subscribe(your_target_here your_SHIT_template.in your_SHIT_output.h)
 * Yes, the code has zero error handling. `SHIT` is a predictable "set-it-and-forget-it" program, and is meant to be configured once per workspace.
   
 ```cpp
+auto a = ...; // build number
+
 int patch = a % 10;
 int minor = (a / 10) % 10;
-int major = a / 100;
+int major = std::max(a / 100, 1) + 1;
+
+printf("%i.%i.%i", major, minor, patch)
 ```
