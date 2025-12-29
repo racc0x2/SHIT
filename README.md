@@ -22,5 +22,5 @@ int patch = a % 10;
 int minor = (a / 10) % 10;
 int major = std::max(a / 100, 1) + 1;
 
-printf("%i.%i.%i", major, minor, patch)
+printf("%i.%i.%i", major, minor, patch);
 ```
